@@ -11,8 +11,9 @@ Normal execution should be along the following lines:
 
 import logging
 import os
-import random
 import sys
+import secrets
+
 sys.path.append(os.path.join(os.path.dirname(__file__), 'third_party'))
 import httplib2
 from oauth2client.appengine import CredentialsModel
@@ -127,7 +128,7 @@ class Monitor(webapp2.RequestHandler):
     if channelId is not None:
       follower = Follower.get_or_insert(channelId,
                                         channelId=channelId,
-                                        verifier=random.randrange(100000),
+                                        verifier=secrets.SystemRandom().randrange(100000),
                                         verified=False)
       if verifier is not None and int(verifier) == follower.verifier:
         follower.verified = True
